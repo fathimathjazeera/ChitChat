@@ -45,13 +45,33 @@ if(newUser){
 
 
 const login =async(req,res)=>{
+const {username,password} = req.body
+const user= await User.findOne({username})
+const isPasswordCorrect= await bcryptjs.compare(password, user?.password || "")
+
+if(!user || !isPasswordCorrect){
+    return res.status(400).json({error:"Invalid username or password"})
+}
+
+generateTokenAndSetCookie(user._id,res)
+res.status(200).json({
+    _id:user._id,
+    fullName:user.fullName,
+    profilePic:user.profilePic
+})
 
 }
 
+
+const logout = (req,res)=>{
+res.cookie("jwt","",{maxAge:0})
+res.status(200).json({message:"Logged out successfully"})
+}
 
 
 
 module.exports ={
    signUp,
-   login
+   login,
+   logout
 }

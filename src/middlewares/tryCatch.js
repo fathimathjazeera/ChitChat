@@ -9,7 +9,7 @@ const tryCatchMiddleware = (handler)=>{
            res.json({
             status:"failure",
             message:"something went wrong",
-            error_message: error.name,
+            error_message: error.message,
            })
         }
     }
