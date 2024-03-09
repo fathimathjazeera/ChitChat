@@ -9,7 +9,7 @@ This is a real-time chat application built using Socket.IO, allowing users to se
 - 👾 Real-time messaging with Socket.io
 
 
-🌟 **Tech stack:** Nodejs, Express, MongoDB + Socket.io
+🌟 **Tech stack:** Nodejs + Express + MongoDB + Socket.io
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file
