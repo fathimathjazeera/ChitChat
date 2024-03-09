@@ -1,5 +1,6 @@
 const Conversation = require("../models/conversation");
-const Message = require('../models/message')
+const Message = require('../models/message');
+const { getRecieverSAocketId } = require("../socket/socket");
 
 const sendMessage = async (req,res)=>{
     try{
@@ -32,6 +33,19 @@ const sendMessage = async (req,res)=>{
 
     await Promise.all([conversation.save(), newMessage.save()])
     
+    //SOCKET IO FUNCTIONALITY
+
+    const recieverSocketId= getRecieverSAocketId(recieverId)
+
+    if(recieverSocketId){
+        io.to(recieverSocketId).emit("newMessage",newMessage)
+    }
+
+
+
+
+
+
     res.status(201).json({newMessage})
     }catch(err){
         console.log(err.message)
@@ -77,7 +91,7 @@ const getMessages = async (req, res) => {
 
 		const conversation = await Conversation.findOne({
 			participants: { $all: [senderId, userToChatId] },
-		}).populate("messages"); // NOT REFERENCE BUT ACTUAL MESSAGES
+		}).populate("messages");
 
 		if (!conversation) return res.status(200).json([]);
 

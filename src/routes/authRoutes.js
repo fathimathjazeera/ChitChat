@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {login,signUp,logout} = require('../controllers/user')
+const {login,signUp,logout} = require('../controllers/auth')
 const tryCatch= require('../middlewares/tryCatch')
 
 
